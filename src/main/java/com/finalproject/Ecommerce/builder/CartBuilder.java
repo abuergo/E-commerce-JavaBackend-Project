@@ -12,7 +12,7 @@ public class CartBuilder {
     public static Cart requestToDocument(CartRequest cartRequest){
         return Cart.builder()
                 .email(cartRequest.getEmail())
-                .products(new ArrayList<>())
+                .items(new ArrayList<>())
                 .deliveryAddress(cartRequest.getDeliveryAddress())
                 .orderNumber((int) Math.floor(Math.random()))
                 .status("Generated")
@@ -23,7 +23,7 @@ public class CartBuilder {
     public static CartResponse documentToResponse(Cart cartDocument){
         return CartResponse.builder()
                 .orderNumber(cartDocument.getOrderNumber())
-                .products(cartDocument.getProducts())
+                .products(cartDocument.getItems())
                 .email(cartDocument.getEmail())
                 .status(cartDocument.getStatus())
                 .creationDate(cartDocument.getCreationDate())
