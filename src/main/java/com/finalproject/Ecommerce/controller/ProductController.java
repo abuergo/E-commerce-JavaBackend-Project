@@ -41,8 +41,8 @@ public class ProductController {
         return productService.getByCode(code);
     }
 
-    @GetMapping("/category/{category}")
-    public List<ProductResponse> getAllProductsByCategory(@PathVariable String category) throws ApiRestException{
+    @GetMapping("/")
+    public List<ProductResponse> getAllProductsByCategory(@RequestParam String category) throws ApiRestException{
         return productService.getAllByCategory(category);
     }
 

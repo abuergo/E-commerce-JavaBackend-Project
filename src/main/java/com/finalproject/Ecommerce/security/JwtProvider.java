@@ -18,12 +18,12 @@ public class JwtProvider {
 
     private final ApplicationProperties properties;
 
-    public String getJWTToken(String username) {
+    public String getJWTToken(String usernameOrEmail) {
         var grantedAuthorities =
                 AuthorityUtils.commaSeparatedStringToAuthorityList(Constants.ROLE);
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(usernameOrEmail)
                 .claim(Constants.AUTHORITIES,
                         grantedAuthorities.stream()
                                 .map(GrantedAuthority::getAuthority)
