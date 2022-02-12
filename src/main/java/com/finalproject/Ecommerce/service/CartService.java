@@ -15,7 +15,7 @@ public interface CartService {
     public void deleteCartItem(Integer orderNumber, String code) throws ApiRestException;
     public CartResponse addItem(Integer orderNumber, CartItem cartItem) throws ApiRestException;
     public List<CartItem> getAllItems(Integer orderNumber) throws ApiRestException;
-    public List<CartItem> generateOrder (Integer orderNumber) throws ApiRestException;
+    public List<CartItem> getCartItemsByOrderNumber (Integer orderNumber) throws ApiRestException;
 
 
 

@@ -78,8 +78,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItem> generateOrder(Integer orderNumber) throws ApiRestException {
-        return null;
+    public List<CartItem> getCartItemsByOrderNumber(Integer orderNumber) throws ApiRestException {
+        return getCartByOrderNumber(orderNumber).getItems();
     }
 
     public Cart getCartByOrderNumber(Integer orderNumber) throws ApiRestException{
