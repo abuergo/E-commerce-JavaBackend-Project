@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface EmailService {
     void sendEmail();
-    void sendOrderEmail(List<CartItem> cartItems) throws MessagingException;
+    List<CartItem> sendOrderEmail(List<CartItem> cartItems) throws MessagingException;
 }

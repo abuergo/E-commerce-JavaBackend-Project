@@ -28,12 +28,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendOrderEmail(List<CartItem> cartItems) throws MessagingException {
+    public List<CartItem> sendOrderEmail(List<CartItem> cartItems) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
         helper.setTo("testuser4javaproject@gmail.com");
         helper.setSubject("New order - Java Backend Project: E-commerce");
         helper.setText("This is an email sent to notify the creation of a new order: " + cartItemsInHTML(cartItems));
+        return cartItems;
     }
 
     public String cartItemsInHTML(List<CartItem> cartItems){
