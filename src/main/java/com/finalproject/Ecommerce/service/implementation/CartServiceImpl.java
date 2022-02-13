@@ -1,6 +1,7 @@
 package com.finalproject.Ecommerce.service.implementation;
 
 import com.finalproject.Ecommerce.builder.CartBuilder;
+import com.finalproject.Ecommerce.builder.ProductBuilder;
 import com.finalproject.Ecommerce.model.document.Cart;
 import com.finalproject.Ecommerce.model.document.CartItem;
 import com.finalproject.Ecommerce.model.document.Product;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -116,4 +118,21 @@ public class CartServiceImpl implements CartService {
             throw new ApiRestException(cartItem.getCode(), "The product code does not exist in the product repository");
         }
     }
+
+    public Product getProductByCartItem(CartItem cartItem){
+        return productRepository.findByCode(cartItem.getCode());
+    }
+
+    @Override
+    public List<Product> getProductListByOrderNumber(Integer orderNumber) throws ApiRestException {
+        List<Product> productList = new ArrayList<>();
+        List<CartItem> cartItems = getCartItemsByOrderNumber(orderNumber);
+        for(CartItem item: cartItems){
+            var product = getProductByCartItem(item);
+            productList.add(product);
+        }
+        return productList;
+    }
+
+
 }

@@ -10,9 +10,27 @@ spring:
     host: localhost
     port: 6379
     timeOfLife: 90000
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: testUser4JavaProject@gmail.com
+    password: aaneijaarpzfewtn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+  security:
+    user:
+      name: testing
+      password: 12345
 jwt:
-  expiration: 60000
-  secret: springbootjwtcoderhouse
+  expiration: 90000
+  secret: springbootjwt
 server:
   port: 8080
 

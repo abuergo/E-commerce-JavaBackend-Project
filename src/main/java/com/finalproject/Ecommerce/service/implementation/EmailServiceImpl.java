@@ -1,6 +1,6 @@
 package com.finalproject.Ecommerce.service.implementation;
 
-import com.finalproject.Ecommerce.model.document.CartItem;
+import com.finalproject.Ecommerce.model.document.Product;
 import com.finalproject.Ecommerce.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -28,25 +28,28 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public List<CartItem> sendOrderEmail(List<CartItem> cartItems) throws MessagingException {
+    public void sendOrderEmail(List<Product> productCart) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
         helper.setTo("testuser4javaproject@gmail.com");
         helper.setSubject("New order - Java Backend Project: E-commerce");
-        helper.setText("This is an email sent to notify the creation of a new order: " + cartItemsInHTML(cartItems));
-        return cartItems;
+        helper.setText("This is an email sent to notify the creation of a new order: " + cartProductsInHTML(productCart), true);
+        javaMailSender.send(mimeMessage);
     }
 
-    public String cartItemsInHTML(List<CartItem> cartItems){
+    public String cartProductsInHTML(List<Product> productCart){
         StringBuilder str = new StringBuilder();
         appendLine(str);
         str.append("<h2> Order products: </h2>");
-        for(CartItem cart: cartItems){
-            str.append("<ul><li> Product Code: ");
-            str.append(cart.getCode());
+        for(Product product: productCart){
+            str.append("<ul><li> Product Description: ");
+            str.append(product.getDescription());
             str.append("</li>");
-            str.append("<li> Product Quantity: ");
-            str.append(cart.getCode());
+            str.append("<li> Product Code: ");
+            str.append(product.getCode());
+            str.append("</li>");
+            str.append("<li> Product Price: $ ");
+            str.append(product.getPrice());
             str.append("</li></ul>");
             appendLine(str);
         }
