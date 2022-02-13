@@ -1,6 +1,5 @@
 package com.finalproject.Ecommerce.model.response;
 
-import com.finalproject.Ecommerce.model.document.CartItem;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +10,7 @@ import java.util.List;
 @Data
 public class CartResponse {
     private Integer orderNumber;
-    private List<CartItem> products;
+    private List<CartItemResponse> products;
     private String email;
     private String status;
     private LocalDateTime creationDate;

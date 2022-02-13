@@ -1,6 +1,6 @@
 package com.finalproject.Ecommerce.service.implementation;
 
-import com.finalproject.Ecommerce.model.document.Product;
+import com.finalproject.Ecommerce.model.response.CartItemResponse;
 import com.finalproject.Ecommerce.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -28,31 +28,45 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendOrderEmail(List<Product> productCart) throws MessagingException {
+    public void sendOrderEmail(List<CartItemResponse> cartItems) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
         helper.setTo("testuser4javaproject@gmail.com");
         helper.setSubject("New order - Java Backend Project: E-commerce");
-        helper.setText("This is an email sent to notify the creation of a new order: " + cartProductsInHTML(productCart), true);
+        helper.setText("This is an email sent to notify the creation of a new order: " + cartItemsInHTML(cartItems), true);
         javaMailSender.send(mimeMessage);
     }
 
-    public String cartProductsInHTML(List<Product> productCart){
+    public String cartItemsInHTML(List<CartItemResponse> cartItem){
         StringBuilder str = new StringBuilder();
+        double orderTotal = 0d;
         appendLine(str);
         str.append("<h2> Order products: </h2>");
-        for(Product product: productCart){
-            str.append("<ul><li> Product Description: ");
-            str.append(product.getDescription());
+        for(CartItemResponse item: cartItem){
+            double totalByItem = 0d;
+            str.append("<ul><li><b>Description: </b> ");
+            str.append(item.getDescription());
             str.append("</li>");
-            str.append("<li> Product Code: ");
-            str.append(product.getCode());
+            str.append("<li><b>Category: </b>");
+            str.append(item.getCategory());
             str.append("</li>");
-            str.append("<li> Product Price: $ ");
-            str.append(product.getPrice());
-            str.append("</li></ul>");
+            str.append("<li><b>Price:</b> $ ");
+            str.append(item.getPrice());
+            str.append("</li>");
+            str.append("<li><b>Quantity: </b>");
+            str.append(item.getQuantity());
+            str.append("</li>");
+            str.append("<li><b>Code: </b>");
+            str.append(item.getCode());
             appendLine(str);
+            totalByItem = item.getPrice() * item.getQuantity();
+            str.append(String.format("<li><b> Total : </b> $ %1.2f", totalByItem));
+            str.append("</li></ul>");
+            orderTotal += totalByItem;
+            appendLine(str);
+            str.append("<hr>");
         }
+        str.append(String.format("<h2> Order total: $ %1.2f </h2>", orderTotal));
         return str.toString();
     }
 

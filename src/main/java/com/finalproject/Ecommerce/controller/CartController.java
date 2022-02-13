@@ -1,9 +1,9 @@
 package com.finalproject.Ecommerce.controller;
 
 import com.finalproject.Ecommerce.model.document.CartItem;
-import com.finalproject.Ecommerce.model.document.Product;
 import com.finalproject.Ecommerce.model.exceptions.ApiRestException;
 import com.finalproject.Ecommerce.model.request.CartRequest;
+import com.finalproject.Ecommerce.model.response.CartItemResponse;
 import com.finalproject.Ecommerce.model.response.CartResponse;
 import com.finalproject.Ecommerce.service.CartService;
 import com.finalproject.Ecommerce.service.EmailService;
@@ -41,13 +41,12 @@ public class CartController {
 
     @PostMapping("/{orderNumber}")
     public void generateOrderEmail(@PathVariable Integer orderNumber) throws ApiRestException, MessagingException{
-        emailService.sendOrderEmail(cartService.getProductListByOrderNumber(orderNumber));
+        emailService.sendOrderEmail(cartService.getCartItemsByOrderNumber(orderNumber));
     }
 
-
     @GetMapping("/{orderNumber}")
-    public List<CartItem> getAllItems(@PathVariable Integer orderNumber) throws ApiRestException{
-        return cartService.getAllItems(orderNumber);
+    public List<CartItemResponse> getAllItems(@PathVariable Integer orderNumber) throws ApiRestException{
+        return cartService.getCartItemsByOrderNumber(orderNumber);
     }
     @PutMapping("/{orderNumber}")
     public CartResponse updateCartItem(@PathVariable Integer orderNumber,@RequestBody CartItem cartItem)throws ApiRestException{
