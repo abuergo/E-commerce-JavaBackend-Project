@@ -1,6 +1,5 @@
 package com.finalproject.Ecommerce.service;
 
-import com.finalproject.Ecommerce.model.document.Product;
 import com.finalproject.Ecommerce.model.response.CartItemResponse;
 
 import javax.mail.MessagingException;
