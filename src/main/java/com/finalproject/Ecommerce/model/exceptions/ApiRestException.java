@@ -1,25 +1,14 @@
 package com.finalproject.Ecommerce.model.exceptions;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor(staticName = "of")
 public class ApiRestException extends Exception{
     private String code;
     private String message;
-
-    public ApiRestException(String message){
-        super(message);
-    }
-
-    public ApiRestException(String code, String message){
-        super(message);
-        this.code = code;
-    }
 }

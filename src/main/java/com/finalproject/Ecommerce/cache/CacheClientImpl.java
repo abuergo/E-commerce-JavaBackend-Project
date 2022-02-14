@@ -30,14 +30,12 @@ public class CacheClientImpl<T> implements CacheClient<T> {
     }
 
     @Override
-    public T save(String key, T data) {
+    public void save(String key, T data) {
         try{
             hashOperations.put(Constants.NAME_MAP_USER, key, serializeItem(data));
-            return data;
         } catch (JsonProcessingException e){
             log.error("Unexpected error trying to convert {} instance to String", data.getClass().getSimpleName());
         }
-        return data;
     }
 
     @Override

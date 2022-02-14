@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,7 +83,7 @@ public class CartServiceImpl implements CartService {
     public Cart getCartByOrderNumber(Integer orderNumber) throws ApiRestException{
         Cart cart = cartRepository.findByOrderNumber(orderNumber);
         if(Objects.isNull(cart)){
-            throw new ApiRestException(orderNumber.toString(), "Cart with that order number does not exist");
+            throw ApiRestException.builder().code(orderNumber.toString()).message("Cart with that order number does not exist").build();
         }
         return cart;
     }
@@ -93,10 +92,10 @@ public class CartServiceImpl implements CartService {
         Cart existingCart = cartRepository.findByEmail(email);
         User existingEmail = userRepository.findByEmail(email);
         if(Objects.nonNull(existingCart)){
-            throw new ApiRestException(email, "Existing cart with this email");
+            throw ApiRestException.builder().code(email).message("Existing cart with that email").build();
         }
         if(Objects.isNull(existingEmail)){
-            throw new ApiRestException(email, "Unregistered user email");
+            throw ApiRestException.builder().code(email).message("Unregistered user email").build();
         }
     }
 
@@ -106,13 +105,13 @@ public class CartServiceImpl implements CartService {
                 return cartItem;
             }
         }
-        throw new ApiRestException(code, "The product to update is not in the cart");
+        throw ApiRestException.builder().code(code).message("The product to update is not in the cart").build();
     }
 
     public Product findItemProductInRepository(CartItem cartItem) throws ApiRestException{
         Product productFound = productRepository.findByCode(cartItem.getCode());
         if(Objects.isNull(productFound)){
-            throw new ApiRestException(cartItem.getCode(), "The product code does not exist in the product repository");
+            throw ApiRestException.builder().code(cartItem.getCode()).message("The product code does not exist in the product repository").build();
         }
         return productFound;
     }

@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponse> getAllByCategory(String category) throws ApiRestException {
         var productListByCategory = productRepository.findAllByCategory(category);
         if (Objects.isNull(productListByCategory)) {
-            throw new ApiRestException(category, "There are no products with that category");
+            throw ApiRestException.builder().code(category).message("There are no products with that category").build();
         }
         return ProductBuilder.documentListToResponseGetAll(productListByCategory);
     }
@@ -72,14 +72,14 @@ public class ProductServiceImpl implements ProductService {
     private void validateCreateRequest(ProductRequest request) throws ApiRestException {
         var product = productRepository.findByCode(request.getCode());
         if(!Objects.isNull(product)){
-            throw new ApiRestException("The product already exists");
+            throw ApiRestException.builder().message("The product already exists").build();
         }
     }
 
     private void validateExistenceRequest(String code) throws ApiRestException{
         var product = productRepository.findByCode(code);
         if(Objects.isNull(product)){
-            throw new ApiRestException(code, "The product does not exist");
+            throw ApiRestException.builder().code(code).message("The product does not exist").build();
         }
     }
 }

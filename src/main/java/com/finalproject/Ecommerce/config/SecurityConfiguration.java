@@ -27,8 +27,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/user/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/product").permitAll()
+                .antMatchers(HttpMethod.GET, "/product").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
-                // those requests which have not permitAll method will be forbidden unless user has the auth, it means, put the bearer token.
+                // those requests which do not have .permitAll() method will be forbidden unless the user has the authentication, i.e he had entered the token provided.
                 .anyRequest().authenticated();
     }
 

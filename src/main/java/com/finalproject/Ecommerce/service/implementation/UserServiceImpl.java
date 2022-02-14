@@ -11,7 +11,6 @@ import com.finalproject.Ecommerce.security.JwtProvider;
 import com.finalproject.Ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
             return generateAndRespondUserWithToken(email); // user was on mongodb so we return the token
         }
         if(!Objects.equals(existingUserInRedis.getPassword(), password)){ // user exists in redis but password is invalid
-            throw new ApiRestException("Invalid user or password");
+            throw ApiRestException.builder().message("Invalid user or password").build();
         }
         return generateAndRespondUserWithToken(email); // user exists in redis and email and psw are ok
     }
@@ -45,7 +44,6 @@ public class UserServiceImpl implements UserService {
         validateUser(request);
         var user = userRepository.save(UserBuilder.requestToDocument(request));
         saveUserInCache(UserBuilder.requestToDocument(request));
-
         return UserBuilder.documentToResponse(user);
     }
 
