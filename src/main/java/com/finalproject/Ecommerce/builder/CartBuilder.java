@@ -14,7 +14,7 @@ public class CartBuilder {
                 .email(cartRequest.getEmail())
                 .items(new ArrayList<>())
                 .deliveryAddress(cartRequest.getDeliveryAddress())
-                .orderNumber((int) Math.floor(Math.random()))
+                .orderNumber((int) Math.floor(Math.random()*(1000-1+1)+1))
                 .status("Generated")
                 .creationDate(LocalDateTime.now())
                 .build();

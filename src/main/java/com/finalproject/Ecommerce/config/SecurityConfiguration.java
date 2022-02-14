@@ -24,11 +24,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .addFilterAfter(new JwtTokenFilter(properties), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.POST, "/user/login").permitAll()
-//                    .antMatchers(HttpMethod.POST, "/user/register").permitAll()
-                .anyRequest().permitAll();
-
-//                .authenticated();
+                .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/user/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/product").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
+                // those requests which have not permitAll method will be forbidden unless user has the auth, it means, put the bearer token.
+                .anyRequest().authenticated();
     }
 
     @Bean

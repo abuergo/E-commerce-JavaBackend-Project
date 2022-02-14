@@ -10,18 +10,19 @@ import com.finalproject.Ecommerce.repository.UserRepository;
 import com.finalproject.Ecommerce.security.JwtProvider;
 import com.finalproject.Ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final CacheClient<User> cache;
-    private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
     @Override
@@ -30,17 +31,21 @@ public class UserServiceImpl implements UserService {
         if(Objects.isNull(existingUserInRedis)){ // user does not exist in redis but exists on mongo database
             var existingUser = getUserWithEmailAndPassword(email, password); // if this is not the case then it finishes with an exception due to the user does not exist anywhere
             saveUserInCache(existingUser);
+            return generateAndRespondUserWithToken(email); // user was on mongodb so we return the token
         }
-        return generateAndRespondUserWithToken(email); // it gets here if user exists in redis, so we have to return user a token
+        if(!Objects.equals(existingUserInRedis.getPassword(), password)){ // user exists in redis but password is invalid
+            throw new ApiRestException("Invalid user or password");
+        }
+        return generateAndRespondUserWithToken(email); // user exists in redis and email and psw are ok
     }
+
 
     @Override
     public UserResponse register(UserRequest request) throws ApiRestException {
         validateUser(request);
-        request.setPassword(passwordEncoder.encode(request.getPassword()));
-        UserBuilder.requestToDocument(request);
         var user = userRepository.save(UserBuilder.requestToDocument(request));
-        saveUserInCache(user);
+        saveUserInCache(UserBuilder.requestToDocument(request));
+
         return UserBuilder.documentToResponse(user);
     }
 
@@ -65,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     private User getUserWithEmailAndPassword(String email, String password) throws ApiRestException{
         var userEmailFound = userRepository.findByEmail(email);
-        if(userEmailFound == null || !passwordEncoder.matches(password, userEmailFound.getPassword())){
+        if(userEmailFound == null || !Objects.equals(password, userEmailFound.getPassword())){
             throw ApiRestException.builder().message("Invalid user or password").build();
         }
         return userEmailFound;
@@ -75,5 +80,4 @@ public class UserServiceImpl implements UserService {
         var token = jwtProvider.getJWTToken(email);
         return UserResponse.builder().email(email).token(token).build();
     }
-
 }

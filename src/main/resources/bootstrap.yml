@@ -1,7 +1,8 @@
+# Note: email requests will not run for security reasons.
 spring:
   data:
     mongodb:
-      database: coderhouse
+      database: ecommercetest2
       host: localhost
       port: 27017
   cache:
@@ -14,7 +15,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: testUser4JavaProject@gmail.com
-    password: aaneijaarpzfewtn
+    password:
     properties:
       mail:
         smtp:
@@ -33,40 +34,3 @@ jwt:
   secret: springbootjwt
 server:
   port: 8080
-
-
-#  cache:
-#    type: redis
-#  redis:
-#    host: localhost
-#    port: 6379
-#    timeOfLife: 90000
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: test123@gmail.com
-#    password: asdfgh123
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          connectiontimeout: 5000
-#          timeout: 5000
-#          writetimeout: 5000
-#          starttls:
-#            enable: true
-
-
-
-#spring:
-#  application:
-#    name: ecommerce-v1-dev
-#  cloud:
-#    config:
-#      uri: http://localhost:8888
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: refresh

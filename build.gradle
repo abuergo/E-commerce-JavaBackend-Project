@@ -23,24 +23,28 @@ ext {
 }
 
 dependencies {
-//	implementation "org.springframework.boot:spring-boot-starter-log4j2"
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.springframework.cloud:spring-cloud-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// mongodb
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	// redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'redis.clients:jedis'
 
-	// to validations
+	// validations
 	implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.3'
 
-	// to configurations
-//	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	// config-server
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+	// allows bootstrap.yml
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
 	// json web token
@@ -50,11 +54,11 @@ dependencies {
 	// email
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+	// security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-//	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
+	// spring aop
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
 }
