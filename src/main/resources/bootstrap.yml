@@ -1,36 +1,13 @@
-# Note: email requests will not run for security reasons.
+# Note: To run this project, you must have the configuration server application running (it must be running on port 8888).
 spring:
-  data:
-    mongodb:
-      database: ecommercedb
-      host: localhost
-      port: 27017
-  cache:
-    type: redis
-  redis:
-    host: localhost
-    port: 6379
-    timeOfLife: 900000
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: testUser4JavaProject@gmail.com
-    password:
-    properties:
-      mail:
-        smtp:
-          auth: true
-          connectiontimeout: 5000
-          timeout: 5000
-          writetimeout: 5000
-          starttls:
-            enable: true
-  security:
-    user:
-      name: testing
-      password: 12345
-jwt:
-  expiration: 600000
-  secret: springbootjwt
-server:
-  port: 8080
+  application:
+    name: ecommerce-v3-dev
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
