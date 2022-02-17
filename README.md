@@ -212,3 +212,32 @@ Se deben guardar las siguientes colecciones en la base de datos de MongoDB
 
 Se dispondrá de un archivo de configuración externo con opciones para desarrollo y otras para producción. Como parámetros de configuración estarán el puerto de escucha del servidor, la url de la base de datos, el correo electrónico que recibirá las notificaciones del backend, el tiempo de expiración de sesión, entre otros.
 
+***
+# About the project: explanatory videos
+
+https://user-images.githubusercontent.com/62315321/154380660-96c0920f-cbae-425c-b307-a2568728ecd8.mp4
+
+***
+
+https://user-images.githubusercontent.com/62315321/154380665-4842a8ec-fcdc-4dba-a606-8b92901437b7.mp4
+
+***
+
+https://user-images.githubusercontent.com/62315321/154380667-b348ebcb-3314-46f0-8ab4-be084a7180f0.mp4
+
+***
+
+https://user-images.githubusercontent.com/62315321/154380671-29ff87cd-0906-493f-83c6-4c8f6519e66e.mp4
+
+***
+
+https://user-images.githubusercontent.com/62315321/154380675-36cfdf7e-bbfd-402d-8de5-2522fd77f870.mp4
+
+***
+
+https://user-images.githubusercontent.com/62315321/154380684-011fc137-c5be-4f32-a686-d32c03bc20c0.mp4
+
+***
+
+https://user-images.githubusercontent.com/62315321/154380691-111d9491-473b-4f47-934b-b0b4fa08ab35.mp4
+
